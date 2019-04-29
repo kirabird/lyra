@@ -59,20 +59,6 @@ module.exports = {
         use:
           'file-loader?name=/fonts/[name].  [ext]&mimetype=application/font-otf',
       },
-      // {
-      //   test: /\.(le|sc|c)ss$/,
-      //   use: [
-      //     'style-loader',
-      //     'css-loader',
-      //     'postcss-loader',
-      //     {
-      //       loader: 'less-loader',
-      //       options: {
-      //         includePaths: [path.resolve('../node_modules')],
-      //       },
-      //     },
-      //   ],
-      // },
     ],
   },
 };

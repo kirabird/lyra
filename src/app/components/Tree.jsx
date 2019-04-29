@@ -268,12 +268,16 @@ const buildTree = passedInData => {
 };
 
 class Tree extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.state = { existingTree: {} };
   }
 
+  componentDidUpdate() {
+    tree = buildTree(this.props.treeData);
+  }
   componentDidMount() {
-    buildTree(this.props.treeData);
+    const tree = buildTree(this.props.treeData);
   }
 
   render() {

@@ -2111,9 +2111,10 @@ class MainContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeItem: 'None',
+      activeItem: 'CACHE',
       stateData: randomStateData,
       cacheData: randomCacheData,
+      currentData: randomCacheData,
       initialData: {},
     };
     this.handleItemClick = this.handleItemClick.bind(this);
@@ -2128,22 +2129,29 @@ class MainContainer extends Component {
   }
 
   handleItemClick(e, { name }) {
+    console.log('?????', name);
     this.setState({ activeItem: name });
+    if (name === 'CACHE') {
+      this.setState({ currentData: this.state.cacheData });
+    }
+    if (name === 'STATE') {
+      this.setState({ currentData: this.state.stateData });
+    }
   }
 
   render() {
-    const { activeItem, stateData, cacheData, initialData } = this.state;
-    let currentData = initialData;
-    if (activeItem === 'CACHE') {
-      currentData = cacheData;
-    }
-    if (activeItem === 'STATE') {
-      currentData = stateData;
-    }
+    const { activeItem, stateData, cacheData } = this.state;
+    // let currentData = initialData;
+    // if (activeItem === 'CACHE') {
+    //   currentData = cacheData;
+    // }
+    // if (activeItem === 'STATE') {
+    //   currentData = stateData;
+    // }
 
     const cacheTree = () => <Tree treeData={cacheData} />;
     const stateTree = () => <Tree treeData={stateData} />;
-
+    // console.log('hellloooo', activeItem);
     return (
       <Grid style={{ marginTop: '0%' }}>
         <Grid.Column color="teal" style={{ padding: 0 }} width={2}>
@@ -2167,23 +2175,23 @@ class MainContainer extends Component {
               </Label> */}
             </Menu.Item>
 
-            <Link to="/cache">
-              <Menu.Item
-                name="CACHE"
-                icon="database"
-                active={activeItem === 'CACHE'}
-                onClick={this.handleItemClick}
-              />
-            </Link>
+            {/* <Link to="/cache"> */}
+            <Menu.Item
+              name="CACHE"
+              icon="database"
+              active={activeItem === 'CACHE'}
+              onClick={this.handleItemClick}
+            />
+            {/* </Link> */}
 
-            <Link to="/state">
-              <Menu.Item
-                icon="database"
-                name="STATE"
-                active={activeItem === 'STATE'}
-                onClick={this.handleItemClick}
-              />
-            </Link>
+            {/* <Link to="/state"> */}
+            <Menu.Item
+              icon="database"
+              name="STATE"
+              active={activeItem === 'STATE'}
+              onClick={this.handleItemClick}
+            />
+            {/* </Link> */}
           </Menu>
         </Grid.Column>
 
@@ -2213,7 +2221,7 @@ class MainContainer extends Component {
               indentWidth="2"
               displayDataTypes={'false'}
               theme="tomorrow"
-              src={{ currentData }}
+              src={this.state.currentData}
             />
           </Segment>
         </Grid.Column>
@@ -2238,9 +2246,9 @@ class MainContainer extends Component {
           <Divider />
           <Segment basic>
             {/* <Tree treeData={this.state.currentObj} /> */}
-            <Switch>
+            {/* <Switch>
               <Route
-                path="/"
+                path="/cache"
                 component={cacheTree}
                 // render={props => (
                 //   <Tree {...props} treeData={this.state.cacheData} />
@@ -2253,7 +2261,15 @@ class MainContainer extends Component {
                 // )}
                 component={stateTree}
               />
-            </Switch>
+            </Switch> */}
+            <Tree treeData={this.state.currentData} />
+            {/* {activeItem === 'CACHE' ? (
+              <Tree treeData={cacheData} />
+            ) : activeItem === 'STATE' ? (
+              <Tree treeData={stateData} />
+            ) : (
+              <h1>Wheres the data?</h1>
+            )} */}
             <hr />
             {/* <Tree treeData={currentData} /> */}
             <h2>Payload:</h2>
